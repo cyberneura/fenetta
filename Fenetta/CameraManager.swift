@@ -15,12 +15,11 @@ final class CameraManager: ObservableObject {
     @Published var selectedDeviceID: String? {
         didSet {
             guard selectedDeviceID != oldValue else { return }
-            zoomScale = 1.0
             configureSession(for: selectedDeviceID)
         }
     }
-    @Published private(set) var zoomScale = 1.0
     @Published private(set) var statusMessage: String? = "Connect a USB camera to begin."
+    @Published private(set) var videoSize: CGSize?
 
     private let sessionQueue = DispatchQueue(label: "camera.session")
     private var observers: [NSObjectProtocol] = []
@@ -72,10 +71,6 @@ final class CameraManager: ObservableObject {
         selectedDeviceID = device.id
     }
 
-    func setZoom(_ scale: CGFloat) {
-        zoomScale = min(max(scale, 1.0), 5.0)
-    }
-
     func refreshDevices() {
         // Keep only stable identifiers. AVCaptureDevice objects are deliberately
         // rediscovered whenever the hardware list or selection changes.
@@ -123,6 +118,7 @@ final class CameraManager: ObservableObject {
                 if session.isRunning { session.stopRunning() }
                 Task { @MainActor in
                     self.statusMessage = "Connect a USB camera to begin."
+                    self.videoSize = nil
                 }
                 return
             }
@@ -135,8 +131,11 @@ final class CameraManager: ObservableObject {
                 session.addInput(input)
                 session.commitConfiguration()
                 if !session.isRunning { session.startRunning() }
+                let dimensions = CMVideoFormatDescriptionGetDimensions(device.activeFormat.formatDescription)
+                let videoSize = CGSize(width: CGFloat(dimensions.width), height: CGFloat(dimensions.height))
                 Task { @MainActor in
                     self.statusMessage = nil
+                    self.videoSize = videoSize
                 }
             } catch {
                 session.commitConfiguration()

@@ -4,10 +4,11 @@ import UIKit
 
 struct CameraPreviewView: UIViewRepresentable {
     let session: AVCaptureSession
+    let videoGravity: AVLayerVideoGravity
 
     func makeUIView(context: Context) -> PreviewView {
         let view = PreviewView()
-        view.previewLayer.videoGravity = .resizeAspect
+        view.previewLayer.videoGravity = videoGravity
         view.previewLayer.session = session
         view.disableMirroring()
         return view
@@ -17,6 +18,7 @@ struct CameraPreviewView: UIViewRepresentable {
         if uiView.previewLayer.session !== session {
             uiView.previewLayer.session = session
         }
+        uiView.previewLayer.videoGravity = videoGravity
         uiView.disableMirroring()
     }
 }
@@ -43,4 +45,3 @@ final class PreviewView: UIView {
         }
     }
 }
-
