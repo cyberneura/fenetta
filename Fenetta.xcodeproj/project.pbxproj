@@ -7,22 +7,26 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		430EB122BF570D6ED75B6167 /* DevicePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 802801C5582245E5270BA91C /* DevicePickerView.swift */; };
 		5FCD68EA14006292B24D5BFC /* CameraManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85099E34F3F1975A0010AEFF /* CameraManager.swift */; };
 		6EE3990CE8D5361DEF03DBE5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 30C3EB2B6BB7093630DACF7A /* Assets.xcassets */; };
 		7423CA16BF110D9495BDD5F9 /* FenettaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6DDC585EC6151490D98CDDC /* FenettaApp.swift */; };
 		9AF12A6F694084E3283B5AE8 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64EB3645680B23B8E25F00B5 /* ContentView.swift */; };
+		9DC96816E338AD4734C6B6BC /* ControlsOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E82F1A7F76E9654477BEC4F /* ControlsOverlay.swift */; };
 		BBC86088AFE55DECB216D37C /* CameraPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62DEDC74EF2C7E435BD06274 /* CameraPreviewView.swift */; };
+		D041AF04F9E72952D74C591C /* ViewerState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4C84081DE76A409A9910ED2 /* ViewerState.swift */; };
+		D5A9EBBC46FEA24D05DAC557 /* GestureOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6B5436CD245EF4C0A354AFA /* GestureOverlay.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0E82F1A7F76E9654477BEC4F /* ControlsOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlsOverlay.swift; sourceTree = "<group>"; };
 		15531395495828FD8C8C16CE /* Fenetta.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Fenetta.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		30C3EB2B6BB7093630DACF7A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		62DEDC74EF2C7E435BD06274 /* CameraPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraPreviewView.swift; sourceTree = "<group>"; };
 		64EB3645680B23B8E25F00B5 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		802801C5582245E5270BA91C /* DevicePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicePickerView.swift; sourceTree = "<group>"; };
 		85099E34F3F1975A0010AEFF /* CameraManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraManager.swift; sourceTree = "<group>"; };
 		B13C05EDD2666F1B53489391 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		C6B5436CD245EF4C0A354AFA /* GestureOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GestureOverlay.swift; sourceTree = "<group>"; };
+		F4C84081DE76A409A9910ED2 /* ViewerState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewerState.swift; sourceTree = "<group>"; };
 		F6DDC585EC6151490D98CDDC /* FenettaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FenettaApp.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -50,9 +54,11 @@
 				85099E34F3F1975A0010AEFF /* CameraManager.swift */,
 				62DEDC74EF2C7E435BD06274 /* CameraPreviewView.swift */,
 				64EB3645680B23B8E25F00B5 /* ContentView.swift */,
-				802801C5582245E5270BA91C /* DevicePickerView.swift */,
+				0E82F1A7F76E9654477BEC4F /* ControlsOverlay.swift */,
 				F6DDC585EC6151490D98CDDC /* FenettaApp.swift */,
+				C6B5436CD245EF4C0A354AFA /* GestureOverlay.swift */,
 				B13C05EDD2666F1B53489391 /* Info.plist */,
+				F4C84081DE76A409A9910ED2 /* ViewerState.swift */,
 			);
 			path = Fenetta;
 			sourceTree = "<group>";
@@ -131,8 +137,10 @@
 				5FCD68EA14006292B24D5BFC /* CameraManager.swift in Sources */,
 				BBC86088AFE55DECB216D37C /* CameraPreviewView.swift in Sources */,
 				9AF12A6F694084E3283B5AE8 /* ContentView.swift in Sources */,
-				430EB122BF570D6ED75B6167 /* DevicePickerView.swift in Sources */,
+				9DC96816E338AD4734C6B6BC /* ControlsOverlay.swift in Sources */,
 				7423CA16BF110D9495BDD5F9 /* FenettaApp.swift in Sources */,
+				D5A9EBBC46FEA24D05DAC557 /* GestureOverlay.swift in Sources */,
+				D041AF04F9E72952D74C591C /* ViewerState.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
