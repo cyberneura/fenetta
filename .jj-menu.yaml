@@ -1,0 +1,61 @@
+# jj-menu (https://github.com/cyberneura/jj-menu) 用のメニュー定義。
+#
+# 各エントリのコマンドは、jj-menu が組み立てて**呼び出し元のシェルで eval される**。
+# 複数手順は `&&` で繋いで fail-fast にすること (jj-menu は `set -e` も `&&` も足さない)。
+# `cd` を含むものはサブシェルで囲み、実行後に作業ディレクトリを動かさない。
+#
+# Fenetta.xcodeproj は project.yml から xcodegen で生成する。pbxproj を直接いじらない。
+# ビルド成果物は ~build/ (先頭 ~ は gitignore 対象)。
+menu:
+  - title: ビルドして Xcode で開く
+    help: >
+      xcodegen でプロジェクトを再生成 → 実機向け Debug ビルド → Xcode で Fenetta.xcodeproj を開く。
+      署名は Cyberneura K.K. (2YN5TLNQ9J) の Automatic。**個人チーム (GHB7FBR8UY) は
+      Xcode の Apple ID ログインが弾かれるので使えない。**
+      実機へのインストールはこの項目ではやらない。Xcode の Run か下の「インストール」を使う。
+    shell: >
+      ( set -o pipefail && cd "$(git rev-parse --show-toplevel)"
+      && xcodegen generate
+      && xcodebuild -project Fenetta.xcodeproj -scheme Fenetta
+      -destination 'generic/platform=iOS' -configuration Debug
+      -derivedDataPath '~build' -allowProvisioningUpdates build
+      | grep -E 'error|warning: |BUILD'
+      && open Fenetta.xcodeproj )
+
+  - title: ビルド (実機向け Debug)
+    help: >
+      xcodegen で再生成してから generic/platform=iOS 向けに Debug ビルドする。
+      成果物: ~build/Build/Products/Debug-iphoneos/Fenetta.app
+      シミュレータ向けではない。TARGETED_DEVICE_FAMILY=2 (iPad 専用) なので iPhone には入らない。
+    shell: >
+      ( set -o pipefail && cd "$(git rev-parse --show-toplevel)"
+      && xcodegen generate
+      && xcodebuild -project Fenetta.xcodeproj -scheme Fenetta
+      -destination 'generic/platform=iOS' -configuration Debug
+      -derivedDataPath '~build' -allowProvisioningUpdates build
+      | grep -E 'error|warning: |BUILD' )
+
+  - title: Bartolome (iPad mini) にインストールして起動
+    help: >
+      ビルド済みの Fenetta.app を devicectl で Bartolome に入れて起動する。**先にビルドすること。**
+      iPad は USB 接続してロック解除しておく。UDID は devicectl の JSON 出力から名前で引く。
+      見つからない・同名が複数ある場合は止まる。デバイス名の綴りは Bartolome (Barltorome ではない)。
+    shell: >
+      ( set -o pipefail && cd "$(git rev-parse --show-toplevel)"
+      && xcrun devicectl list devices --json-output '~build/devices.json' >/dev/null
+      && UDID=$(python3 -c 'import json,sys; m=[d["identifier"] for d in json.load(open(sys.argv[1]))["result"]["devices"] if d["deviceProperties"]["name"]==sys.argv[2]]; sys.exit("device %s: %d matches" % (sys.argv[2], len(m))) if len(m)!=1 else print(m[0])' '~build/devices.json' Bartolome)
+      && xcrun devicectl device install app --device "$UDID" '~build/Build/Products/Debug-iphoneos/Fenetta.app'
+      && xcrun devicectl device process launch --device "$UDID" com.ytyng.Fenetta )
+
+  - title: 接続デバイス一覧
+    help: >
+      CoreDevice が認識しているデバイスと状態を表示する。
+      State が unavailable のものは接続されていないのでインストールできない。
+    shell: xcrun devicectl list devices
+
+  - title: Xcode プロジェクトを再生成
+    help: >
+      project.yml から Fenetta.xcodeproj を作り直す。ファイルを追加・削除した時や
+      ビルド設定を project.yml で変えた時に実行する。Xcode 上でプロジェクト設定を
+      変えても次の再生成で消えるので、変更は必ず project.yml に書く。
+    shell: ( cd "$(git rev-parse --show-toplevel)" && xcodegen generate )
