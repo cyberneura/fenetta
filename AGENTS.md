@@ -2,6 +2,18 @@
 
 iPad 専用の UVC (USB) カメラビューア。SwiftUI + AVFoundation。iOS 17 以上、iPad のみ (`TARGETED_DEVICE_FAMILY = 2`)。
 
+## 操作
+
+映像は常時全画面。UI はジェスチャで出す。
+
+- シングルタップ: コントロール (カメラ選択・90 度回転・Fit/Fill) の表示トグル
+- ダブルタップ: contain / cover 切り替え
+- ピンチ: 1〜5 倍ズーム。ズーム中は 2 本指ドラッグでパン
+
+ジェスチャは `GestureOverlay` (UIKit) に集約している。SwiftUI の DragGesture は指の本数を区別できない。
+表示状態は `ViewerState` が持つ。パン上限の計算 (fit / 回転 / viewport 依存) を変えたら、
+`swiftc -parse-as-library Fenetta/ViewerState.swift <ハーネス>` で macOS 向けにコンパイルして数値検証できる。
+
 ## プロジェクト構成
 
 - `Fenetta.xcodeproj` は `project.yml` から `xcodegen generate` で生成する。pbxproj を直接編集しない。
