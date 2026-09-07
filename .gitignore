@@ -14,5 +14,5 @@ xcuserdata/
 .DS_Store
 
 
-# xcodegen / xcodebuild output (see .jj-menu.yaml)
+# xcodegen / xcodebuild output (see .j-menu.yaml)
 ~build/

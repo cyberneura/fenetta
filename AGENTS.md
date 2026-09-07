@@ -25,7 +25,7 @@ iPad 専用の UVC (USB) カメラビューア。SwiftUI + AVFoundation。iOS 17
 
 ## ビルド・実機インストール
 
-`.jj-menu.yaml` に手順をまとめてある (`jj-menu` で選択実行)。手で打つ場合:
+`.j-menu.yaml` に手順をまとめてある (`j-menu` で選択実行)。手で打つ場合:
 
 ```shell
 xcodegen generate

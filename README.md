@@ -15,4 +15,4 @@ xcodegen generate
 open Fenetta.xcodeproj
 ```
 
-Xcode で実機を選んで Run する。コマンドラインからの手順は `AGENTS.md` と `.jj-menu.yaml` を参照。
+Xcode で実機を選んで Run する。コマンドラインからの手順は `AGENTS.md` と `.j-menu.yaml` を参照。
