@@ -1,31 +1,31 @@
 # Fenetta
 
-iPad 専用の UVC (USB) カメラビューア。SwiftUI + AVFoundation。iOS 17 以上、iPad のみ (`TARGETED_DEVICE_FAMILY = 2`)。
+A UVC (USB) camera viewer for iPad only. SwiftUI + AVFoundation. iOS 17 or later, iPad only (`TARGETED_DEVICE_FAMILY = 2`).
 
-## 操作
+## Controls
 
-映像は常時全画面。UI はジェスチャで出す。
+The video is always full screen. The UI is brought up with gestures.
 
-- シングルタップ: コントロール (カメラ選択・90 度回転・Fit/Fill) の表示トグル
-- ダブルタップ: contain / cover 切り替え
-- ピンチ: 1〜5 倍ズーム。ズーム中は 2 本指ドラッグでパン
+- Single tap: toggle the controls (camera selection, 90-degree rotation, Fit/Fill)
+- Double tap: switch between contain / cover
+- Pinch: 1x–5x zoom. While zoomed, drag with two fingers to pan
 
-ジェスチャは `GestureOverlay` (UIKit) に集約している。SwiftUI の DragGesture は指の本数を区別できない。
-表示状態は `ViewerState` が持つ。パン上限の計算 (fit / 回転 / viewport 依存) を変えたら、
-`swiftc -parse-as-library Fenetta/ViewerState.swift <ハーネス>` で macOS 向けにコンパイルして数値検証できる。
+Gestures are consolidated in `GestureOverlay` (UIKit). SwiftUI's DragGesture cannot distinguish the number of fingers.
+View state is held by `ViewerState`. If you change the pan limit calculation (which depends on fit / rotation / viewport),
+you can verify the numbers by compiling for macOS with `swiftc -parse-as-library Fenetta/ViewerState.swift <harness>`.
 
-## プロジェクト構成
+## Project layout
 
-- `Fenetta.xcodeproj` は `project.yml` から `xcodegen generate` で生成する。pbxproj を直接編集しない。
-  Xcode の GUI でビルド設定を変えても次の再生成で消えるので、設定は `project.yml` に書く。
-- ソースは `Fenetta/*.swift`。ファイルを追加したら `xcodegen generate` を実行する。
-- `Fenetta/Info.plist` は手書き (`GENERATE_INFOPLIST_FILE = NO`)。CFBundleIdentifier 等の標準キーは
-  ビルド設定変数で書いてある。消すと devicectl が "not a valid bundle" でインストールを拒否する。
-- ビルド成果物は `~build/` (gitignore 済み)。
+- `Fenetta.xcodeproj` is generated from `project.yml` with `xcodegen generate`. Do not edit the pbxproj directly.
+  Build settings changed in the Xcode GUI are lost on the next regeneration, so put settings in `project.yml`.
+- Sources are `Fenetta/*.swift`. After adding a file, run `xcodegen generate`.
+- `Fenetta/Info.plist` is hand-written (`GENERATE_INFOPLIST_FILE = NO`). Standard keys such as CFBundleIdentifier are
+  written as build setting variables. If you remove them, devicectl refuses to install with "not a valid bundle".
+- Build output goes to `~build/` (already gitignored).
 
-## ビルド・実機インストール
+## Build and install on a device
 
-`.j-menu.yaml` に手順をまとめてある (`j-menu` で選択実行)。手で打つ場合:
+The steps are collected in `.j-menu.yaml` (pick and run them with `j-menu`). To type them by hand:
 
 ```shell
 xcodegen generate
@@ -37,12 +37,12 @@ xcrun devicectl device install app --device <UDID> '~build/Build/Products/Debug-
 xcrun devicectl device process launch --device <UDID> com.ytyng.Fenetta
 ```
 
-- 署名は Cyberneura K.K. (`DEVELOPMENT_TEAM = 2YN5TLNQ9J`) の Automatic。個人チーム GHB7FBR8UY は
-  Xcode の Apple ID ログインが reject されるため使えない。
-- 開発用 iPad は "Bartolome" (iPad mini A17 Pro)。devicectl で `unavailable` なら未接続。
-- Claude Code の sandbox 内では xcodebuild / devicectl が動かない (xcrun キャッシュと CoreDevice XPC が
-  ブロックされる)。`/sandbox` で解除して実行する。
+- Signing is Automatic with Cyberneura K.K. (`DEVELOPMENT_TEAM = 2YN5TLNQ9J`). The personal team GHB7FBR8UY
+  cannot be used because Xcode rejects its Apple ID login.
+- The development iPad is "Bartolome" (iPad mini A17 Pro). If devicectl shows it as `unavailable`, it is not connected.
+- Inside the Claude Code sandbox, xcodebuild / devicectl do not work (the xcrun cache and CoreDevice XPC are
+  blocked). Lift the sandbox with `/sandbox` and run them.
 
-## テスト
+## Tests
 
-ユニットテストは無い。動作確認は実機に USB カメラを接続して行う。
+There are no unit tests. Verify behavior by connecting a USB camera to a physical device.
