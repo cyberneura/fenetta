@@ -1,18 +1,18 @@
 # Fenetta
 
-iPad 専用の UVC (USB) カメラビューア。USB 接続したカメラの映像を全画面表示し、ピンチでズームできる。
+A UVC (USB) camera viewer for iPad only. It shows the video from a USB-connected camera full screen, and you can pinch to zoom.
 
-## 必要なもの
+## Requirements
 
-- Xcode 16 以上
+- Xcode 16 or later
 - [xcodegen](https://github.com/yonaskolb/XcodeGen) (`brew install xcodegen`)
-- iOS 17 以上の iPad (USB-C で UVC カメラを接続)
+- An iPad running iOS 17 or later (with a UVC camera connected over USB-C)
 
-## ビルド
+## Build
 
 ```shell
 xcodegen generate
 open Fenetta.xcodeproj
 ```
 
-Xcode で実機を選んで Run する。コマンドラインからの手順は `AGENTS.md` と `.j-menu.yaml` を参照。
+Select a physical device in Xcode and Run. For command-line steps, see `AGENTS.md` and `.j-menu.yaml`.
